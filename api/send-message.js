@@ -1,5 +1,6 @@
-import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from './_firebase.js'; // <-- Impor dari file utilitas
+import fetch from 'node-fetch'; // <-- Impor di atas
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -12,19 +13,6 @@ export default async function handler(req, res) {
     }
 
     try {
-        const firebaseConfig = {
-            apiKey: process.env.FIREBASE_API_KEY,
-            authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-            projectId: process.env.FIREBASE_PROJECT_ID,
-            storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-            messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-            appId: process.env.FIREBASE_APP_ID
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        const { default: fetch } = await import('node-fetch');
-
         const linkRef = doc(db, 'disguisedLinks', disguisedId);
         const linkDoc = await getDoc(linkRef);
 
@@ -40,18 +28,17 @@ export default async function handler(req, res) {
         }
 
         const lastSent = linkData.lastSent || 0;
-        const cooldown = 3 * 60 * 1000;
+        const cooldown = 3 * 60 * 1000; // 3 menit
         if (now - lastSent < cooldown) {
             const remaining = Math.ceil((cooldown - (now - lastSent)) / 1000);
             return res.status(429).json({ error: `Anda hanya bisa mengirim satu pesan setiap 3 menit. Coba lagi dalam ${remaining} detik.` });
         }
 
         const nglApiUrl = 'https://ngl.link/api/submit';
-        
         const payload = {
             question: messageText,
             username: linkData.nglUsername,
-            deviceId: 'fake-device-id-1234567890'
+            deviceId: 'fake-device-id-' + Date.now() // Gunakan ID yang sedikit lebih unik
         };
 
         const nglResponse = await fetch(nglApiUrl, {
@@ -59,12 +46,6 @@ export default async function handler(req, res) {
             headers: {
                 'Content-Type': 'application/json',
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
-                'Accept': '*/*',
-                'Accept-Language': 'en-US,en;q=0.5',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'same-origin',
                 'Origin': 'https://ngl.link'
             },
             body: JSON.stringify(payload)
@@ -81,7 +62,6 @@ export default async function handler(req, res) {
         });
 
         res.status(200).json({ message: 'Pesan berhasil dikirim!' });
-
     } catch (e) {
         console.error('Error sending message:', e);
         res.status(500).json({ error: 'Terjadi kesalahan saat mengirim pesan.' });
