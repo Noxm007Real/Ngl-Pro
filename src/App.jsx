@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, Send, Copy, AlertTriangle, Bug, Coffee, Sun, Moon, User, Ghost, ArrowDownCircle, Mail } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, onSnapshot, getDoc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, onSnapshot } from 'firebase/firestore'; // getDoc dan setDoc tidak lagi dibutuhkan di sini
 import noteIconSvg from './assets/note-icon.svg?raw';
 import './index.css';
 
@@ -96,7 +96,9 @@ const App = () => {
 
     const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
-    const handleWelcomePopupClose = async () => {
+    // --- FUNGSI INI TELAH DIPERBAIKI ---
+    const handleWelcomePopupClose = () => {
+        // Hapus semua logika database dari sini
         setShowWelcomePopup(false);
         setIsInitialLoad(false);
         if (audioRef.current) {
@@ -224,7 +226,6 @@ const App = () => {
                     )}
                 </div>
             </div>
-            {/* -- FOOTER DIPERBAIKI -- */}
             <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap">
                 <span className="font-semibold text-white text-shadow dark:text-gray-300">
                     Dibuat dengan <span className="text-pink-400">🩷</span> oleh{' '}
@@ -291,7 +292,6 @@ const App = () => {
                 </button>
             </div>
 
-            {/* -- HITUNGAN MUNDUR DIPERBAIKI -- */}
             {isMessageSent && (
                 <p className="text-center text-sm font-semibold text-white text-shadow dark:text-gray-300 mt-2">
                     Anda dapat mengirim pesan lagi dalam {timeLeft} detik.
@@ -299,7 +299,6 @@ const App = () => {
             )}
             
             <div className="w-full max-w-sm mt-6 text-center text-sm">
-                {/* -- JUMLAH ORANG BERGABUNG DIPERBAIKI -- */}
                 <span className="block mb-2 font-semibold text-white text-shadow dark:text-gray-300">
                   <ArrowDownCircle size={16} className="inline-block mx-1" />
                   {userCount} orang telah bergabung!
@@ -310,7 +309,6 @@ const App = () => {
                     Dapatkan Pesan Untukmu Sendiri!
                 </a>
             </div>
-            {/* -- FOOTER DIPERBAIKI -- */}
             <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap">
                 <span className="font-semibold text-white text-shadow dark:text-gray-300">
                     Dibuat dengan <span className="text-pink-400">🩷</span> oleh{' '}
