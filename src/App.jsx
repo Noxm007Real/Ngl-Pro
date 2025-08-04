@@ -5,7 +5,7 @@ import { getFirestore, doc, onSnapshot, getDoc, setDoc } from 'firebase/firestor
 import noteIconSvg from './assets/note-icon.svg?raw';
 import './index.css';
 
-// Konfigurasi Firebase dari Environment Variables (Ini sudah benar dan aman)
+// Konfigurasi Firebase dari Environment Variables
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -178,7 +178,7 @@ const App = () => {
     
     // -- RENDERER UNTUK HALAMAN PEMBUAT TAUTAN --
     const renderLinkGenerator = () => (
-        <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans transition-colors duration-500 animate-background ${isDarkMode ? 'dark bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-200' : 'bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 text-gray-800'}`}>
+        <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans transition-colors duration-500 animate-background ${isDarkMode ? 'dark bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-200' : 'bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 text-gray-800'}`}>
             <div className={`p-1 rounded-2xl bg-gradient-to-br ${isDarkMode ? 'from-pink-500 to-purple-600' : 'from-pink-400 to-purple-500'} w-full max-w-md mx-auto shadow-2xl`}>
                 <div className={`w-full p-8 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
                     <h1 className="text-3xl font-bold mb-2 text-center">Buat Tautan Samaran</h1>
@@ -224,8 +224,18 @@ const App = () => {
                     )}
                 </div>
             </div>
-            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-sm text-gray-500 flex items-center justify-center space-x-1">
-                <span>dibuat dengan</span> <span className="text-pink-500">🩷</span> <span>oleh</span> <a href="https://instagram.com/nelson.oxm007" target="_blank" rel="noopener noreferrer" className="text-gray-800 dark:text-gray-300 font-bold hover:underline">Noxm007</a>
+            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap">
+                <span className="text-gray-800 font-medium dark:text-gray-400">
+                    Dibuat dengan <span className="text-pink-500">🩷</span> oleh{' '}
+                    <a 
+                        href="https://instagram.com/nelson.oxm007" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="font-bold text-green-800 dark:text-green-400 hover:underline"
+                    >
+                        Noxm007
+                    </a>
+                </span>
             </div>
         </div>
     );
@@ -235,7 +245,7 @@ const App = () => {
       const username = 'anonym'; 
       
       return (
-        <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans transition-colors duration-500 animate-background ${isDarkMode ? 'dark bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-200' : 'bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 text-gray-800'}`}>
+        <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans transition-colors duration-500 animate-background ${isDarkMode ? 'dark bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-200' : 'bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 text-gray-800'}`}>
             <div className={`w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl p-1 bg-gradient-to-br ${isDarkMode ? 'from-pink-500 to-purple-600' : 'from-pink-400 to-purple-500'}`}>
                 <div className={`p-4 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-[22px]`}>
                     <div className="flex items-center space-x-3 mb-4">
@@ -297,8 +307,18 @@ const App = () => {
                     Dapatkan Pesan Untukmu Sendiri!
                 </a>
             </div>
-            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-sm text-gray-500 flex items-center justify-center space-x-1">
-                <span>dibuat dengan</span> <span className="text-pink-500">🩷</span> <span>oleh</span> <a href="https://instagram.com/nelson.oxm007" target="_blank" rel="noopener noreferrer" className="text-gray-800 dark:text-gray-300 font-bold hover:underline">Noxm007</a>
+            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap">
+                <span className="text-gray-800 font-medium dark:text-gray-400">
+                    Dibuat dengan <span className="text-pink-500">🩷</span> oleh{' '}
+                    <a 
+                        href="https://instagram.com/nelson.oxm007" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="font-bold text-green-800 dark:text-green-400 hover:underline"
+                    >
+                        Noxm007
+                    </a>
+                </span>
             </div>
         </div>
       );
