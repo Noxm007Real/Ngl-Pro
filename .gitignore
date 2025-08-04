@@ -1,0 +1,14 @@
+# Dependency yang diinstal oleh NPM
+/node_modules
+
+# File dan folder yang dihasilkan oleh Vite
+/dist
+
+# Variabel lingkungan
+.env
+
+# Log debug atau file cache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache

@@ -1,0 +1,72 @@
+***NGL LINK PRO (ANTI-SPAM)***
+
+<br>Pendahuluan
+
+Apakah Anda bosan dengan spam yang mengganggu di NGL.link? Proyek ini adalah solusi untuk Anda. NGL Pro adalah aplikasi web yang dirancang untuk melindungi Anda dan teman-teman Anda dari "bomber" NGL yang mengirim pesan brutal. Dengan menyembunyikan tautan NGL asli di balik tautan samaran dan menerapkan batasan waktu pengiriman, proyek ini memastikan Anda hanya menerima pesan yang tulus dan tidak diganggu oleh spam.
+-------
+
+<br>Fitur Utama
+
+Tautan Samaran:
+Lindungi nama pengguna NGL Anda dengan tautan samaran yang dihasilkan secara unik.
+
+Mekanisme Anti-Spam:
+Hanya izinkan satu pesan dikirim per pengguna setiap 3 menit, secara efektif menghentikan serangan spam.
+
+Tampilan Asli:
+Antarmuka pengguna yang familiar, menyerupai desain NGL.link, untuk pengalaman yang mulus.
+
+Tautan Kedaluwarsa:
+Tautan samaran secara otomatis kedaluwarsa setelah 48 jam untuk keamanan tambahan.
+-------
+
+<br>Teknologi yang Digunakan
+
+Proyek ini dibangun di atas tumpukan modern untuk performa dan skalabilitas:
+Frontend: React.js, Tailwind CSS
+Backend: Vercel Serverless Functions
+Database: Firebase FirestoreBuild 
+Tool: Vite
+------
+
+<br>Instalasi
+
+Untuk memulai, pastikan Anda telah menginstal persyaratan berikut:
+gitnode & npm
+
+Setelah itu, ikuti langkah-langkah di bawah ini:
+
+```bash
+git clone https://github.com/Noxm007Real/Ngl-Pro.git
+```
+```bash
+cd Ngl-Pro
+```
+```bash
+npm install
+```
+------
+<br>Konfigurasi & Menjalankan Proyek
+Siapkan Firebase:
+Buat proyek di Firebase dan aktifkan Firestore.
+Salin kredensial API Anda.
+
+Buat file .env:
+Buat file .env di direktori utama proyek Anda dengan kredensial Firebase:
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_firebase_app_id
+
+Jalankan di Lingkungan Lokal:
+```bash
+npm run dev
+```
+Aplikasi akan tersedia di http://localhost:5173
+
+Untuk lisensi, baca disini 
+[LISENCE](https://github.com/Noxm007Real/Ngl-Pro/tree/master?tab=MIT-1-ov-file)
+
+<br><br> ***Dibuat dengan 🩷 oleh [Noxm007](https://www.instagram.com/nelson.oxm007)***

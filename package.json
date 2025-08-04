@@ -1,0 +1,26 @@
+{
+  "name": "ngl-pro-noxm007",
+  "version": "1.0.0",
+  "description": "A web app to disguise NGL links and prevent spam.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "firebase": "^11.6.1",
+    "lucide-react": "^0.292.0",
+    "nanoid": "^5.0.3",
+    "node-fetch": "^3.3.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.3.5",
+    "tsparticles": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "vite": "^5.4.19"
+  }
+}
