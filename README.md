@@ -53,6 +53,7 @@ Salin kredensial API Anda.
 
 Buat file .env:
 Buat file .env di direktori utama proyek Anda dengan kredensial Firebase:
+
 VITE_FIREBASE_API_KEY=your_firebase_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
 VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
@@ -64,7 +65,7 @@ Jalankan di Lingkungan Lokal:
 ```bash
 npm run dev
 ```
-Aplikasi akan tersedia di http://localhost:5173
+Aplikasi akan tersedia di http://localhost:3000
 
 Untuk lisensi, baca disini 
 [LISENCE](https://github.com/Noxm007Real/Ngl-Pro/tree/master?tab=MIT-1-ov-file)
