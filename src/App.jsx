@@ -6,7 +6,6 @@ import { nanoid } from 'nanoid';
 import noteIconSvg from './assets/note-icon.svg?raw';
 import './index.css';
 
-// PENTING: ISI DENGAN KREDENSIAL FIREBASE ANDA DARI KONSOL
 const firebaseConfig = {
   apiKey: "AIzaSyA38SQnoQGgpIRPeDhmuR29Jju4vuKDVGI",
   authDomain: "ngl-pro-noxm007.firebaseapp.com",
@@ -135,27 +134,21 @@ const App = () => {
         setError('');
 
         try {
-            const disguisedId = nanoid(10);
-            const expirationTimestamp = Date.now() + 48 * 60 * 60 * 1000;
-
-            const linkRef = doc(db, 'disguisedLinks', disguisedId);
-            await setDoc(linkRef, {
-                nglUsername,
-                createdAt: Date.now(),
-                expiresAt: expirationTimestamp,
+            const response = await fetch('/api/create-link', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nglUsername }),
             });
 
-            const counterRef = doc(db, 'stats', 'userCounter');
-            const counterDoc = await getDoc(counterRef);
-            if (!counterDoc.exists()) {
-                await setDoc(counterRef, { count: 1 });
-            } else {
-                await updateDoc(counterRef, {
-                    count: increment(1),
-                });
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Error dari server: ${errorText}`);
             }
-            
-            setDisguisedLink(`${window.location.origin}/?id=${disguisedId}`);
+
+            const data = await response.json();
+            setDisguisedLink(`${window.location.origin}/?id=${data.disguisedId}`);
             setResponseMessage('Tautan berhasil dibuat!');
         } catch (err) {
             console.error('Gagal membuat tautan:', err);
@@ -189,68 +182,27 @@ const App = () => {
         setError('');
 
         try {
-            const linkRef = doc(db, 'disguisedLinks', disguisedId);
-            const linkDoc = await getDoc(linkRef);
-
-            if (!linkDoc.exists() || Date.now() > linkDoc.data().expiresAt) {
-                setError('Tautan tidak valid atau sudah kedaluwarsa.');
-                setLoading(false);
-                return;
-            }
-
-            const linkData = linkDoc.data();
-            const now = Date.now();
-            const lastSent = linkData.lastSent || 0;
-            const cooldown = 3 * 60 * 1000;
-
-            if (now - lastSent < cooldown) {
-                const remaining = Math.ceil((cooldown - (now - lastSent)) / 1000);
-                setError(`Anda hanya bisa mengirim satu pesan setiap 3 menit. Coba lagi dalam ${remaining} detik.`);
-                setLoading(false);
-                return;
-            }
-
-            const nglApiUrl = 'https://ngl.link/api/submit';
-            
-            const payload = {
-                question: messageText,
-                username: linkData.nglUsername,
-                deviceId: 'fake-device-id-1234567890'
-            };
-
-            const nglResponse = await fetch(nglApiUrl, {
+            const response = await fetch('/api/send-message', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
-                    'Accept': '*/*',
-                    'Accept-Language': 'en-US,en;q=0.5',
-                    'Accept-Encoding': 'gzip, deflate, br',
-                    'Sec-Fetch-Dest': 'empty',
-                    'Sec-Fetch-Mode': 'cors',
-                    'Sec-Fetch-Site': 'same-origin',
-                    'Origin': 'https://ngl.link'
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify({ disguisedId, messageText }),
             });
 
-            if (!nglResponse.ok) {
-                const errorData = await nglResponse.text();
-                console.error('Error from NGL API:', errorData);
-                throw new Error('Gagal mengirim pesan ke NGL.link.');
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Gagal mengirim pesan.');
             }
 
-            await updateDoc(linkRef, {
-                lastSent: now,
-            });
-
-            setResponseMessage('Pesan berhasil dikirim!');
+            const data = await response.json();
+            setResponseMessage(data.message);
             setMessageText('');
             setIsMessageSent(true);
             setTimeLeft(180);
-        } catch (e) {
-            console.error('Error sending message:', e);
-            setError(e.message || 'Terjadi kesalahan saat mengirim pesan.');
+        } catch (err) {
+            console.error('Gagal mengirim pesan:', err);
+            setError(err.message);
         } finally {
             setLoading(false);
         }
@@ -315,7 +267,7 @@ const App = () => {
       
       return (
         <div className={`min-h-screen p-4 flex flex-col items-center justify-center font-sans ${isDarkMode ? 'dark bg-gradient-to-br from-gray-800 to-black text-gray-200' : 'bg-gradient-to-br from-pink-500 to-purple-600 text-white animate-background'} ${isInitialLoad ? '' : 'animate-fade-in'}`}>
-            <div className={`w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl p-4 ${isDarkMode ? 'bg-gray-800/50 backdrop-blur-sm' : 'bg-white/20 backdrop-blur-sm'} ${isInitialLoad ? '' : 'animate-fade-in-up delay-100'}`}>
+            <div className={`w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl p-4 ${isInitialLoad ? '' : 'animate-fade-in-up delay-100'} ${isDarkMode ? 'bg-gray-800/50 backdrop-blur-sm' : 'bg-white/20 backdrop-blur-sm'}`}>
                 <div className={`flex items-center space-x-2 mb-4 ${isInitialLoad ? '' : 'animate-fade-in-up delay-200'}`}>
                     <img
                         src="https://placehold.co/40x40/ffffff/000000?text=👤"
