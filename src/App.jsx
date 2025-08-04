@@ -7,13 +7,13 @@ import noteIconSvg from './assets/note-icon.svg?raw';
 import './index.css';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA38SQnoQGgpIRPeDhmuR29Jju4vuKDVGI",
-  authDomain: "ngl-pro-noxm007.firebaseapp.com",
-  projectId: "ngl-pro-noxm007",
-  storageBucket: "ngl-pro-noxm007.firebasestorage.app",
-  messagingSenderId: "448368947926",
-  appId: "1:448368947926:web:82b0aad4ed6765e8bf4f77",
-  };
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+};
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
