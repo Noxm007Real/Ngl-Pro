@@ -1,11 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, Send, Copy, AlertTriangle, Bug, Coffee, Sun, Moon } from 'lucide-react';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
 import { nanoid } from 'nanoid';
 import noteIconSvg from './assets/note-icon.svg?raw';
 import './index.css';
 
-// PENTING: KODE FIREBASE DI SINI SUDAH DIHAPUS DARI DEKLARASI GLOBAL
-// KARENA AKAN DITANGANI OLEH SERVERLESS FUNCTION
+const firebaseConfig = {
+  apiKey: "AIzaSyA38SQnoQGgpIRPeDhmuR29Jju4vuKDVGI",
+  authDomain: "ngl-pro-noxm007.firebaseapp.com",
+  projectId: "ngl-pro-noxm007",
+  storageBucket: "ngl-pro-noxm007.firebasestorage.app",
+  messagingSenderId: "448368947926",
+  appId: "1:448368947926:web:82b0aad4ed6765e8bf4f77",
+  };
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const App = () => {
     const [nglUsername, setNglUsername] = useState('');
     const [messageText, setMessageText] = useState('');
@@ -34,23 +46,17 @@ const App = () => {
         return () => clearTimeout(timer);
     }, [timeLeft]);
 
-    // Efek untuk mengambil hitungan pengguna dari serverless function
     useEffect(() => {
-        const fetchUserCount = async () => {
-            try {
-                const response = await fetch('/api/get-user-count');
-                const data = await response.json();
-                if (response.ok) {
-                    setUserCount(data.count);
-                }
-            } catch (error) {
-                console.error('Gagal mengambil hitungan pengguna:', error);
+        const counterRef = doc(db, 'stats', 'userCounter');
+        const unsubscribe = onSnapshot(counterRef, (doc) => {
+            if (doc.exists()) {
+                setUserCount(doc.data().count);
+            } else {
+                setUserCount(0);
             }
-        };
+        });
 
-        fetchUserCount();
-        const interval = setInterval(fetchUserCount, 5000);
-        return () => clearInterval(interval);
+        return () => unsubscribe();
     }, []);
 
     useEffect(() => {
@@ -109,6 +115,12 @@ const App = () => {
         setIsInitialLoad(false);
         if (audioRef.current) {
             audioRef.current.play().catch(e => console.error("Autoplay was prevented:", e));
+        }
+
+        const counterRef = doc(db, 'stats', 'userCounter');
+        const counterDoc = await getDoc(counterRef);
+        if (!counterDoc.exists()) {
+            await setDoc(counterRef, { count: 0 });
         }
     };
 
