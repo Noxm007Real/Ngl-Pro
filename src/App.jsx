@@ -224,14 +224,15 @@ const App = () => {
                     )}
                 </div>
             </div>
+            {/* -- FOOTER DIPERBAIKI -- */}
             <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap">
-                <span className="text-gray-800 font-medium dark:text-gray-400">
-                    Dibuat dengan <span className="text-pink-500">🩷</span> oleh{' '}
+                <span className="font-semibold text-white text-shadow dark:text-gray-300">
+                    Dibuat dengan <span className="text-pink-400">🩷</span> oleh{' '}
                     <a 
                         href="https://instagram.com/nelson.oxm007" 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="font-bold text-green-800 dark:text-green-400 hover:underline"
+                        className="font-bold text-green-300 dark:text-green-400 hover:underline"
                     >
                         Noxm007
                     </a>
@@ -290,14 +291,16 @@ const App = () => {
                 </button>
             </div>
 
+            {/* -- HITUNGAN MUNDUR DIPERBAIKI -- */}
             {isMessageSent && (
-                <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">
+                <p className="text-center text-sm font-semibold text-white text-shadow dark:text-gray-300 mt-2">
                     Anda dapat mengirim pesan lagi dalam {timeLeft} detik.
                 </p>
             )}
             
-            <div className="w-full max-w-sm mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-                <span className="block mb-2">
+            <div className="w-full max-w-sm mt-6 text-center text-sm">
+                {/* -- JUMLAH ORANG BERGABUNG DIPERBAIKI -- */}
+                <span className="block mb-2 font-semibold text-white text-shadow dark:text-gray-300">
                   <ArrowDownCircle size={16} className="inline-block mx-1" />
                   {userCount} orang telah bergabung!
                   <ArrowDownCircle size={16} className="inline-block mx-1" />
@@ -307,14 +310,15 @@ const App = () => {
                     Dapatkan Pesan Untukmu Sendiri!
                 </a>
             </div>
+            {/* -- FOOTER DIPERBAIKI -- */}
             <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap">
-                <span className="text-gray-800 font-medium dark:text-gray-400">
-                    Dibuat dengan <span className="text-pink-500">🩷</span> oleh{' '}
+                <span className="font-semibold text-white text-shadow dark:text-gray-300">
+                    Dibuat dengan <span className="text-pink-400">🩷</span> oleh{' '}
                     <a 
                         href="https://instagram.com/nelson.oxm007" 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="font-bold text-green-800 dark:text-green-400 hover:underline"
+                        className="font-bold text-green-300 dark:text-green-400 hover:underline"
                     >
                         Noxm007
                     </a>
