@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, getDoc, updateDoc, increment } from 'firebase/firestore';
 import { nanoid } from 'nanoid';
 
+// PENTING: KREDENSIAL FIREBASE DITARIK DARI ENVIRONMENT VARIABLES
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
