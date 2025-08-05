@@ -23,10 +23,10 @@ Tautan samaran secara otomatis kedaluwarsa setelah 48 jam untuk keamanan tambaha
 <br>Teknologi yang Digunakan
 
 Proyek ini dibangun di atas tumpukan modern untuk performa dan skalabilitas:
-Frontend: React.js, Tailwind CSS
-Backend: Vercel Serverless Functions
-Database: Firebase FirestoreBuild 
-Tool: Vite
+-Frontend: React.js, Tailwind CSS
+-Backend: Vercel Serverless Functions
+-Database: Firebase Firestore
+-Build Tool: Vite
 ------
 
 <br>Instalasi
