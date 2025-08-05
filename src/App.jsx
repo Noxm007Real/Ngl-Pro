@@ -183,7 +183,8 @@ const App = () => {
              <div className={`w-full max-w-md mx-auto transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}>
                 <div className={`p-1 rounded-2xl bg-gradient-to-br from-pink-400 to-purple-500 w-full shadow-2xl ${!isInitialLoad && 'animate-fade-in-up'}`}>
                     <div className={`w-full p-8 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-                        <h1 className="text-3xl font-bold mb-2 text-center">Buat Tautan Samaran</h1>
+                        {/* -- BARIS INI TELAH DIPERBAIKI -- */}
+                        <h1 className="text-3xl font-bold mb-2 text-center bg-gradient-to-r from-pink-500 to-purple-600 text-transparent bg-clip-text">Buat Tautan Samaran</h1>
                         <p className={`mb-6 text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                             Masukkan nama pengguna NGL Anda untuk melindungi link asli dari spam.
                         </p>
@@ -338,8 +339,7 @@ const App = () => {
             <div className={`fixed inset-0 -z-10 animate-background ${isDarkMode ? 'bg-gradient-to-br from-gray-800 via-gray-900 to-black' : 'bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400'}`} />
             
             {showWelcomePopup && (
-                // -- DIV UNTUK LATAR BELAKANG POPUP --
-                <div className={`fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in`}>
+                <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
                     <div className="bg-white p-8 rounded-xl max-w-sm mx-auto text-center shadow-2xl transition-all duration-500 transform scale-100 opacity-100 animate-fade-in-up">
                         <h2 className="text-3xl font-bold text-gray-900 mb-4">Selamat Datang!</h2>
                         <p className="text-gray-600 mb-6">
