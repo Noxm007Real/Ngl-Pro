@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, Send, Copy, AlertTriangle, Bug, Coffee, Sun, Moon, User, Ghost, ArrowDownCircle, Mail } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, onSnapshot } from 'firebase/firestore'; // getDoc dan setDoc tidak lagi dibutuhkan di sini
+import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
 import noteIconSvg from './assets/note-icon.svg?raw';
 import './index.css';
 
@@ -96,11 +96,13 @@ const App = () => {
 
     const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
-    // --- FUNGSI INI TELAH DIPERBAIKI ---
     const handleWelcomePopupClose = () => {
-        // Hapus semua logika database dari sini
         setShowWelcomePopup(false);
-        setIsInitialLoad(false);
+        // Kita set isInitialLoad menjadi false setelah beberapa saat agar transisi lebih mulus
+        setTimeout(() => {
+            setIsInitialLoad(false);
+        }, 100); // Penundaan 100ms
+        
         if (audioRef.current) {
             audioRef.current.play().catch(e => console.error("Autoplay was prevented:", e));
         }
@@ -170,7 +172,7 @@ const App = () => {
             setMessageText('');
             setIsMessageSent(true);
             setTimeLeft(180);
-        } catch (err) {
+        } catch (err) => {
             console.error('Gagal mengirim pesan:', err);
             setError(err.message);
         } finally {
@@ -180,8 +182,8 @@ const App = () => {
     
     // -- RENDERER UNTUK HALAMAN PEMBUAT TAUTAN --
     const renderLinkGenerator = () => (
-        <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans transition-colors duration-500 animate-background ${isDarkMode ? 'dark bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-200' : 'bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 text-gray-800'}`}>
-            <div className={`p-1 rounded-2xl bg-gradient-to-br ${isDarkMode ? 'from-pink-500 to-purple-600' : 'from-pink-400 to-purple-500'} w-full max-w-md mx-auto shadow-2xl`}>
+        <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans transition-opacity duration-500 animate-background ${isDarkMode ? 'dark bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-200' : 'bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 text-gray-800'} ${isInitialLoad ? 'opacity-0' : 'animate-fade-in'}`}>
+            <div className={`p-1 rounded-2xl bg-gradient-to-br ${isDarkMode ? 'from-pink-500 to-purple-600' : 'from-pink-400 to-purple-500'} w-full max-w-md mx-auto shadow-2xl animate-fade-in-up`}>
                 <div className={`w-full p-8 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
                     <h1 className="text-3xl font-bold mb-2 text-center">Buat Tautan Samaran</h1>
                     <p className={`mb-6 text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
@@ -247,8 +249,8 @@ const App = () => {
       const username = 'anonym'; 
       
       return (
-        <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans transition-colors duration-500 animate-background ${isDarkMode ? 'dark bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-200' : 'bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 text-gray-800'}`}>
-            <div className={`w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl p-1 bg-gradient-to-br ${isDarkMode ? 'from-pink-500 to-purple-600' : 'from-pink-400 to-purple-500'}`}>
+        <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans transition-opacity duration-500 animate-background ${isDarkMode ? 'dark bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-200' : 'bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 text-gray-800'} ${isInitialLoad ? 'opacity-0' : 'animate-fade-in'}`}>
+            <div className={`w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl p-1 bg-gradient-to-br ${isDarkMode ? 'from-pink-500 to-purple-600' : 'from-pink-400 to-purple-500'} animate-fade-in-up`}>
                 <div className={`p-4 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-[22px]`}>
                     <div className="flex items-center space-x-3 mb-4">
                         <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
@@ -273,7 +275,7 @@ const App = () => {
                 </div>
             </div>
 
-            <div className="w-full max-w-sm my-4">
+            <div className={`w-full max-w-sm my-4 animate-fade-in-up delay-100`}>
                 {error && (
                     <div className="flex items-center text-red-500 mb-4 bg-red-100 p-3 rounded-lg">
                         <AlertTriangle size={20} className="mr-2" />
@@ -293,12 +295,12 @@ const App = () => {
             </div>
 
             {isMessageSent && (
-                <p className="text-center text-sm font-semibold text-white text-shadow dark:text-gray-300 mt-2">
+                <p className={`text-center text-sm font-semibold text-white text-shadow dark:text-gray-300 mt-2 animate-fade-in-up delay-200`}>
                     Anda dapat mengirim pesan lagi dalam {timeLeft} detik.
                 </p>
             )}
             
-            <div className="w-full max-w-sm mt-6 text-center text-sm">
+            <div className={`w-full max-w-sm mt-6 text-center text-sm animate-fade-in-up delay-300`}>
                 <span className="block mb-2 font-semibold text-white text-shadow dark:text-gray-300">
                   <ArrowDownCircle size={16} className="inline-block mx-1" />
                   {userCount} orang telah bergabung!
@@ -351,7 +353,7 @@ const App = () => {
             {userId ? renderMessageForm() : renderLinkGenerator()}
 
             <div className="fixed bottom-4 right-4 flex flex-col space-y-4 z-50">
-                <a href="https://ko-fi.com/" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white shadow-lg transition-transform hover:scale-110">
+                <a href="https://s.id/SwRch" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white shadow-lg transition-transform hover:scale-110">
                     <Coffee size={24} />
                 </a>
                 <a href="https://wa.me/6287838901041?text=web+Ngl+Pro+nya+bermasalah+bang" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white shadow-lg transition-transform hover:scale-110">
