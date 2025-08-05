@@ -70,4 +70,6 @@ Aplikasi akan tersedia di http://localhost:3000
 Untuk lisensi, baca disini 
 [LISENCE](https://github.com/Noxm007Real/Ngl-Pro/tree/master?tab=MIT-1-ov-file)
 
+<br><br> ***Jika kamu menyukai proyek ini, silahkan berikan dukungan anda [DISINI☕](https://s.id/SwRch)***
+
 <br><br> ***Dibuat dengan 🩷 oleh [Noxm007](https://www.instagram.com/nelson.oxm007)***
