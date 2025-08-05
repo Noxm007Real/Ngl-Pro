@@ -98,10 +98,9 @@ const App = () => {
 
     const handleWelcomePopupClose = () => {
         setShowWelcomePopup(false);
-        // Kita set isInitialLoad menjadi false setelah beberapa saat agar transisi lebih mulus
         setTimeout(() => {
             setIsInitialLoad(false);
-        }, 100); // Penundaan 100ms
+        }, 100);
         
         if (audioRef.current) {
             audioRef.current.play().catch(e => console.error("Autoplay was prevented:", e));
@@ -172,7 +171,7 @@ const App = () => {
             setMessageText('');
             setIsMessageSent(true);
             setTimeLeft(180);
-        } catch (err) => {
+        } catch (err) { // <<<--- KESALAHAN SUDAH DIPERBAIKI DI SINI
             console.error('Gagal mengirim pesan:', err);
             setError(err.message);
         } finally {
@@ -180,7 +179,6 @@ const App = () => {
         }
     };
     
-    // -- RENDERER UNTUK HALAMAN PEMBUAT TAUTAN --
     const renderLinkGenerator = () => (
         <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans transition-opacity duration-500 animate-background ${isDarkMode ? 'dark bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-200' : 'bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 text-gray-800'} ${isInitialLoad ? 'opacity-0' : 'animate-fade-in'}`}>
             <div className={`p-1 rounded-2xl bg-gradient-to-br ${isDarkMode ? 'from-pink-500 to-purple-600' : 'from-pink-400 to-purple-500'} w-full max-w-md mx-auto shadow-2xl animate-fade-in-up`}>
@@ -244,7 +242,6 @@ const App = () => {
         </div>
     );
 
-    // -- RENDERER UNTUK HALAMAN PENGIRIMAN PESAN --
     const renderMessageForm = () => {
       const username = 'anonym'; 
       
