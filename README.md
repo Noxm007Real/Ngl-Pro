@@ -68,7 +68,7 @@ npm run dev
 Aplikasi akan tersedia di http://localhost:3000
 
 Untuk lisensi, baca disini 
-[LISENCE](https://github.com/Noxm007Real/Ngl-Pro/tree/master?tab=MIT-1-ov-file)
+[LISENCE](https://github.com/Noxm007Real/Ngl-Pro/blob/master/LICENSE)
 
 <br><br> ***Jika kamu menyukai proyek ini, silahkan berikan dukungan anda [DISINI☕](https://s.id/SwRch)***
 
