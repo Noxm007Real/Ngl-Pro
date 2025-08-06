@@ -27,7 +27,7 @@ const App = () => {
     const [nglUsername, setNglUsername] = useState('');
     const [messageText, setMessageText] = useState('');
     const [disguisedLink, setDisguisedLink] = useState('');
-    const [responseMessage, setResponseMessage] = = useState('');
+    const [responseMessage, setResponseMessage] = useState('');
     const [isMessageSent, setIsMessageSent] = useState(false);
     const [timeLeft, setTimeLeft] = useState(0);
     const [loading, setLoading] = useState(false);
