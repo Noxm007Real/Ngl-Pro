@@ -67,3 +67,26 @@ body {
     text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
   }
 }
+/* Impor Gaya Dasar Swiper */
+@import 'swiper/css';
+@import 'swiper/css/effect-coverflow';
+@import 'swiper/css/pagination';
+
+/* Penyesuaian Kustom untuk Carousel */
+.promo-carousel {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.promo-carousel .swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 300px; /* Lebar setiap kartu */
+  height: auto; /* Tinggi akan menyesuaikan konten */
+}
+
+.promo-carousel .swiper-slide-shadow-left,
+.promo-carousel .swiper-slide-shadow-right {
+  background-image: none !important; /* Menghilangkan bayangan default yang kurang bagus */
+}
