@@ -1,6 +1,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
 /* Impor Gaya Dasar Swiper */
 @import 'swiper/css';
 @import 'swiper/css/effect-coverflow';
@@ -82,11 +83,22 @@ body {
 .promo-carousel .swiper-slide {
   background-position: center;
   background-size: cover;
-  width: 300px; /* Lebar setiap kartu */
-  height: auto; /* Tinggi akan menyesuaikan konten */
+  width: 300px;
+  height: auto;
 }
 
 .promo-carousel .swiper-slide-shadow-left,
 .promo-carousel .swiper-slide-shadow-right {
-  background-image: none !important; /* Menghilangkan bayangan default yang kurang bagus */
+  background-image: none !important;
 }
+
+/* Kustomisasi untuk indikator titik */
+.swiper-pagination-bullet {
+  background-color: #ffffff !important;
+  opacity: 0.5 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #ec4899 !important; /* Warna pink */
+  opacity: 1 !important;
+    }
