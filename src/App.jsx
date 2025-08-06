@@ -3,9 +3,14 @@ import { Link, Send, Copy, AlertTriangle, Bug, Coffee, Sun, Moon, User, Ghost, A
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
 import noteIconSvg from './assets/note-icon.svg?raw';
-import './index.css';
 
-// Konfigurasi Firebase dari Environment Variables
+// Impor komponen dan modul Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow, Autoplay } from 'swiper/modules';
+
+import './index.css'; // Pastikan index.css diimpor
+
+// ... (Konfigurasi Firebase tetap sama)
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -14,15 +19,15 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const App = () => {
+    // ... (Semua state dan hooks Anda tetap sama)
     const [nglUsername, setNglUsername] = useState('');
     const [messageText, setMessageText] = useState('');
     const [disguisedLink, setDisguisedLink] = useState('');
-    const [responseMessage, setResponseMessage] = useState('');
+    const [responseMessage, setResponseMessage] = = useState('');
     const [isMessageSent, setIsMessageSent] = useState(false);
     const [timeLeft, setTimeLeft] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -216,28 +221,56 @@ const App = () => {
                     </p>
                 </div>
 
-                <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12 ${!isInitialLoad && 'animate-fade-in-up delay-300'}`}>
-                    <div className="p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
-                        <ShieldCheck className="w-12 h-12 mx-auto text-purple-500" />
-                        <h3 className="text-xl font-bold mt-4">Anti-Bot & Spam</h3>
-                        <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Teknologi penyamaran link kami membuat bot spam kebingungan dan tidak bisa menargetkan NGL asli Anda.</p>
-                    </div>
-                    <div className="p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
-                        <EyeOff className="w-12 h-12 mx-auto text-purple-500" />
-                        <h3 className="text-xl font-bold mt-4">IP Lebih Aman</h3>
-                        <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">NGL.link tidak akan melihat IP asli pengirim, melainkan IP server kami, menambah lapisan anonimitas ekstra.</p>
-                    </div>
-                    <div className="p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
-                        <Clock className="w-12 h-12 mx-auto text-purple-500" />
-                        <h3 className="text-xl font-bold mt-4">Link Terbatas Waktu</h3>
-                        <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Setiap link akan hangus dalam 48 jam, mencegah link lama Anda disalahgunakan di kemudian hari.</p>
-                    </div>
-                    <div className="p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
-                        <Zap className="w-12 h-12 mx-auto text-purple-500" />
-                        <h3 className="text-xl font-bold mt-4">Cepat & Simpel</h3>
-                        <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Tanpa login, tanpa ribet. Cukup masukkan username Anda, buat link, dan bagikan dalam 5 detik.</p>
-                    </div>
-                </div>
+                {/* --- BAGIAN PROMOSI BARU DENGAN CAROUSEL --- */}
+                <Swiper
+                    effect={'coverflow'}
+                    grabCursor={true}
+                    centeredSlides={true}
+                    slidesPerView={'auto'}
+                    loop={true}
+                    autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false,
+                    }}
+                    coverflowEffect={{
+                        rotate: 50,
+                        stretch: 0,
+                        depth: 100,
+                        modifier: 1,
+                        slideShadows: false,
+                    }}
+                    modules={[EffectCoverflow, Autoplay]}
+                    className={`promo-carousel ${!isInitialLoad && 'animate-fade-in-up delay-300'}`}
+                >
+                    <SwiperSlide>
+                        <div className="p-6 h-full rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
+                            <ShieldCheck className="w-12 h-12 mx-auto text-purple-500" />
+                            <h3 className="text-xl font-bold mt-4">Anti-Bot & Spam</h3>
+                            <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Teknologi penyamaran link kami membuat bot spam kebingungan dan tidak bisa menargetkan NGL asli Anda.</p>
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <div className="p-6 h-full rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
+                            <EyeOff className="w-12 h-12 mx-auto text-purple-500" />
+                            <h3 className="text-xl font-bold mt-4">IP Lebih Aman</h3>
+                            <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">NGL.link tidak akan melihat IP asli pengirim, melainkan IP server kami, menambah lapisan anonimitas ekstra.</p>
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <div className="p-6 h-full rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
+                            <Clock className="w-12 h-12 mx-auto text-purple-500" />
+                            <h3 className="text-xl font-bold mt-4">Link Terbatas Waktu</h3>
+                            <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Setiap link akan hangus dalam 48 jam, mencegah link lama Anda disalahgunakan di kemudian hari.</p>
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <div className="p-6 h-full rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
+                            <Zap className="w-12 h-12 mx-auto text-purple-500" />
+                            <h3 className="text-xl font-bold mt-4">Cepat & Simpel</h3>
+                            <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Tanpa login, tanpa ribet. Cukup masukkan username Anda, buat link, dan bagikan dalam 5 detik.</p>
+                        </div>
+                    </SwiperSlide>
+                </Swiper>
             </section>
             
             <div className={`mt-20 text-sm whitespace-nowrap transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}>
@@ -250,88 +283,9 @@ const App = () => {
     );
 
     const renderMessageForm = () => {
+      // ... (Kode untuk renderMessageForm tetap sama persis)
       const username = 'anonym'; 
-      
-      return (
-        <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans text-gray-800 dark:text-gray-200 transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}>
-            <div className={`w-full max-w-sm transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}>
-                <div className={`w-full rounded-3xl overflow-hidden shadow-2xl p-1 bg-gradient-to-br from-pink-400 to-purple-500 ${!isInitialLoad && 'animate-fade-in-up'}`}>
-                    <div className={`p-4 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-[22px]`}>
-                        <div className="flex items-center space-x-3 mb-4">
-                            <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                                <User className="w-6 h-6 text-gray-500" />
-                            </div>
-                            <div>
-                                <div className="font-bold text-lg">@{username}</div>
-                                <div className="text-sm text-gray-500 dark:text-gray-400">kirimi aku pesan anonim!</div>
-                            </div>
-                        </div>
-                        <div className="relative mb-4">
-                            <textarea
-                                value={messageText}
-                                onChange={(e) => setMessageText(e.target.value)}
-                                placeholder="Kirim pesan rahasia..."
-                                className={`w-full p-4 rounded-xl transition-all resize-none h-40 border-2 ${isDarkMode ? 'bg-gray-700 text-white placeholder-gray-400 border-gray-600 focus:border-pink-500' : 'bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-200 focus:border-pink-400'} focus:outline-none focus:ring-0`}
-                            />
-                            <div className="absolute bottom-3 right-3 text-gray-400 dark:text-gray-500">
-                               <Ghost size={20} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={`w-full my-4 ${!isInitialLoad && 'animate-fade-in-up delay-100'}`}>
-                    {error && (
-                        <div className="flex items-center text-red-500 mb-4 bg-red-100 p-3 rounded-lg">
-                            <AlertTriangle size={20} className="mr-2" />
-                            <span className="text-sm text-center">{error}</span>
-                        </div>
-                    )}
-                    {responseMessage && (
-                        <div className="text-green-600 mb-4 text-center font-semibold">{responseMessage}</div>
-                    )}
-                    <button
-                        onClick={handleSendMessage}
-                        disabled={loading || isMessageSent}
-                        className={`w-full py-4 rounded-xl font-bold text-lg text-white bg-gray-800 dark:bg-gray-700 hover:bg-gray-900 dark:hover:bg-gray-600 transition-all duration-300 transform shadow-lg ${ (loading || isMessageSent) ? 'opacity-50 cursor-not-allowed' : '' }`}
-                    >
-                        {loading ? 'Mengirim...' : 'Kirim!'}
-                    </button>
-                </div>
-
-                {isMessageSent && (
-                    <p className={`text-center text-sm font-semibold text-white text-shadow dark:text-gray-300 mt-2 ${!isInitialLoad && 'animate-fade-in-up delay-200'}`}>
-                        Anda dapat mengirim pesan lagi dalam {timeLeft} detik.
-                    </p>
-                )}
-                
-                <div className={`w-full mt-6 text-center text-sm ${!isInitialLoad && 'animate-fade-in-up delay-300'}`}>
-                    <span className="block mb-2 font-semibold text-white text-shadow dark:text-gray-300">
-                      <ArrowDownCircle size={16} className="inline-block mx-1" />
-                      {userCount} orang telah bergabung!
-                      <ArrowDownCircle size={16} className="inline-block mx-1" />
-                    </span>
-                    <a href="/" className="flex items-center justify-center w-full py-3 px-4 rounded-lg font-bold text-white bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                        <Mail size={20} className="mr-2" />
-                        Dapatkan Pesan Untukmu Sendiri!
-                    </a>
-                </div>
-            </div>
-            <div className={`absolute bottom-5 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}>
-                <span className={`font-semibold text-white text-shadow dark:text-gray-300 ${!isInitialLoad && 'animate-fade-in-up delay-500'}`}>
-                    Dibuat dengan <span className="text-pink-400">🩷</span> oleh{' '}
-                    <a 
-                        href="https://instagram.com/nelson.oxm007" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="font-bold text-green-300 dark:text-green-400 hover:underline"
-                    >
-                        Noxm007
-                    </a>
-                </span>
-            </div>
-        </div>
-      );
+      return ( <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans text-gray-800 dark:text-gray-200 transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}><div className={`w-full max-w-sm transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}><div className={`w-full rounded-3xl overflow-hidden shadow-2xl p-1 bg-gradient-to-br from-pink-400 to-purple-500 ${!isInitialLoad && 'animate-fade-in-up'}`}><div className={`p-4 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-[22px]`}><div className="flex items-center space-x-3 mb-4"><div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center"><User className="w-6 h-6 text-gray-500" /></div><div><div className="font-bold text-lg">@{username}</div><div className="text-sm text-gray-500 dark:text-gray-400">kirimi aku pesan anonim!</div></div></div><div className="relative mb-4"><textarea value={messageText} onChange={(e) => setMessageText(e.target.value)} placeholder="Kirim pesan rahasia..." className={`w-full p-4 rounded-xl transition-all resize-none h-40 border-2 ${isDarkMode ? 'bg-gray-700 text-white placeholder-gray-400 border-gray-600 focus:border-pink-500' : 'bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-200 focus:border-pink-400'} focus:outline-none focus:ring-0`} /><div className="absolute bottom-3 right-3 text-gray-400 dark:text-gray-500"><Ghost size={20} /></div></div></div></div><div className={`w-full my-4 ${!isInitialLoad && 'animate-fade-in-up delay-100'}`}>{error && (<div className="flex items-center text-red-500 mb-4 bg-red-100 p-3 rounded-lg"><AlertTriangle size={20} className="mr-2" /><span className="text-sm text-center">{error}</span></div>)}{responseMessage && (<div className="text-green-600 mb-4 text-center font-semibold">{responseMessage}</div>)}<button onClick={handleSendMessage} disabled={loading || isMessageSent} className={`w-full py-4 rounded-xl font-bold text-lg text-white bg-gray-800 dark:bg-gray-700 hover:bg-gray-900 dark:hover:bg-gray-600 transition-all duration-300 transform shadow-lg ${ (loading || isMessageSent) ? 'opacity-50 cursor-not-allowed' : '' }`}>{loading ? 'Mengirim...' : 'Kirim!'}</button></div>{isMessageSent && (<p className={`text-center text-sm font-semibold text-white text-shadow dark:text-gray-300 mt-2 ${!isInitialLoad && 'animate-fade-in-up delay-200'}`}>Anda dapat mengirim pesan lagi dalam {timeLeft} detik.</p>)}<div className={`w-full mt-6 text-center text-sm ${!isInitialLoad && 'animate-fade-in-up delay-300'}`}><span className="block mb-2 font-semibold text-white text-shadow dark:text-gray-300"><ArrowDownCircle size={16} className="inline-block mx-1" />{userCount} orang telah bergabung!<ArrowDownCircle size={16} className="inline-block mx-1" /></span><a href="/" className="flex items-center justify-center w-full py-3 px-4 rounded-lg font-bold text-white bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"><Mail size={20} className="mr-2" />Dapatkan Pesan Untukmu Sendiri!</a></div></div><div className={`absolute bottom-5 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}><span className={`font-semibold text-white text-shadow dark:text-gray-300 ${!isInitialLoad && 'animate-fade-in-up delay-500'}`}>Dibuat dengan <span className="text-pink-400">🩷</span> oleh{' '}<a href="https://instagram.com/nelson.oxm007" target="_blank" rel="noopener noreferrer" className="font-bold text-green-300 dark:text-green-400 hover:underline">Noxm007</a></span></div></div> );
     };
 
     const urlParams = new URLSearchParams(window.location.search);
