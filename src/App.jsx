@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, Send, Copy, AlertTriangle, Bug, Coffee, Sun, Moon, User, Ghost, ArrowDownCircle, Mail } from 'lucide-react';
+import { Link, Send, Copy, AlertTriangle, Bug, Coffee, Sun, Moon, User, Ghost, ArrowDownCircle, Mail, ShieldCheck, EyeOff, Clock, Zap } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
 import noteIconSvg from './assets/note-icon.svg?raw';
@@ -31,7 +31,6 @@ const App = () => {
     const [showWelcomePopup, setShowWelcomePopup] = useState(true);
     const [userCount, setUserCount] = useState(0);
     const [isInitialLoad, setIsInitialLoad] = useState(true);
-
     const audioRef = useRef(null);
 
     useEffect(() => {
@@ -177,13 +176,11 @@ const App = () => {
         }
     };
     
-    // -- RENDERER UNTUK HALAMAN PEMBUAT TAUTAN --
     const renderLinkGenerator = () => (
         <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans text-gray-800 dark:text-gray-200`}>
              <div className={`w-full max-w-md mx-auto transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}>
                 <div className={`p-1 rounded-2xl bg-gradient-to-br from-pink-400 to-purple-500 w-full shadow-2xl ${!isInitialLoad && 'animate-fade-in-up'}`}>
                     <div className={`w-full p-8 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-                        {/* -- BARIS INI TELAH DIPERBAIKI -- */}
                         <h1 className="text-3xl font-bold mb-2 text-center bg-gradient-to-r from-pink-500 to-purple-600 text-transparent bg-clip-text">Buat Tautan Samaran</h1>
                         <p className={`mb-6 text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                             Masukkan nama pengguna NGL Anda untuk melindungi link asli dari spam.
@@ -199,52 +196,59 @@ const App = () => {
                             <Link size={20} className={`absolute left-3 top-1/2 -translate-y-1/2 ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`} />
                         </div>
                         
-                        {error && (
-                            <div className="flex items-center text-red-500 mb-4 bg-red-100 p-3 rounded-lg">
-                                <AlertTriangle size={20} className="mr-2" />
-                                <span className="text-sm">{error}</span>
-                            </div>
-                        )}
-                        {responseMessage && !disguisedLink && (
-                            <div className="text-green-500 mb-4 text-center">{responseMessage}</div>
-                        )}
+                        {error && ( <div className="flex items-center text-red-500 mb-4 bg-red-100 p-3 rounded-lg"><AlertTriangle size={20} className="mr-2" /> <span className="text-sm">{error}</span></div> )}
+                        {responseMessage && !disguisedLink && ( <div className="text-green-500 mb-4 text-center">{responseMessage}</div> )}
 
-                        <button
-                            onClick={handleCreateLink}
-                            disabled={loading}
-                            className={`w-full py-3 px-4 rounded-lg font-bold text-white bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        >
+                        <button onClick={handleCreateLink} disabled={loading} className={`w-full py-3 px-4 rounded-lg font-bold text-white bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}>
                             {loading ? 'Membuat...' : 'Buat Tautan'}
                         </button>
 
-                        {disguisedLink && (
-                            <div className="mt-6 p-3 rounded-lg border flex items-center justify-between shadow-inner animate-fade-in bg-gray-50">
-                                <span className="truncate text-sm text-gray-600">{disguisedLink}</span>
-                                <button onClick={copyToClipboard} className="ml-4 p-2 rounded-md bg-pink-500 text-white hover:bg-pink-600 transition-colors" title="Salin Tautan">
-                                    <Copy size={16} />
-                                </button>
-                            </div>
-                        )}
+                        {disguisedLink && ( <div className="mt-6 p-3 rounded-lg border flex items-center justify-between shadow-inner animate-fade-in bg-gray-50"><span className="truncate text-sm text-gray-600">{disguisedLink}</span><button onClick={copyToClipboard} className="ml-4 p-2 rounded-md bg-pink-500 text-white hover:bg-pink-600 transition-colors" title="Salin Tautan"><Copy size={16} /></button></div>)}
                     </div>
                 </div>
             </div>
-            <div className={`absolute bottom-5 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}>
-                <span className={`font-semibold text-white text-shadow dark:text-gray-300 ${!isInitialLoad && 'animate-fade-in-up delay-200'}`}>
+
+            <section className={`w-full max-w-4xl mx-auto mt-20 text-center transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}>
+                <div className={`${!isInitialLoad && 'animate-fade-in-up delay-200'}`}>
+                    <h2 className="text-4xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 text-transparent bg-clip-text mb-4">NGL Penuh Sampah? Waktunya Melawan Balik.</h2>
+                    <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                        Bosan dengan pesan bot dan spam? Kami perkenalkan perisai utamamu. Bukan sekadar penyingkat link biasa, kami adalah bodyguard untuk NGL Anda.
+                    </p>
+                </div>
+
+                <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12 ${!isInitialLoad && 'animate-fade-in-up delay-300'}`}>
+                    <div className="p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
+                        <ShieldCheck className="w-12 h-12 mx-auto text-purple-500" />
+                        <h3 className="text-xl font-bold mt-4">Anti-Bot & Spam</h3>
+                        <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Teknologi penyamaran link kami membuat bot spam kebingungan dan tidak bisa menargetkan NGL asli Anda.</p>
+                    </div>
+                    <div className="p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
+                        <EyeOff className="w-12 h-12 mx-auto text-purple-500" />
+                        <h3 className="text-xl font-bold mt-4">IP Lebih Aman</h3>
+                        <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">NGL.link tidak akan melihat IP asli pengirim, melainkan IP server kami, menambah lapisan anonimitas ekstra.</p>
+                    </div>
+                    <div className="p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
+                        <Clock className="w-12 h-12 mx-auto text-purple-500" />
+                        <h3 className="text-xl font-bold mt-4">Link Terbatas Waktu</h3>
+                        <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Setiap link akan hangus dalam 48 jam, mencegah link lama Anda disalahgunakan di kemudian hari.</p>
+                    </div>
+                    <div className="p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
+                        <Zap className="w-12 h-12 mx-auto text-purple-500" />
+                        <h3 className="text-xl font-bold mt-4">Cepat & Simpel</h3>
+                        <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Tanpa login, tanpa ribet. Cukup masukkan username Anda, buat link, dan bagikan dalam 5 detik.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <div className={`mt-20 text-sm whitespace-nowrap transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}>
+                <span className={`font-semibold text-white text-shadow dark:text-gray-300 ${!isInitialLoad && 'animate-fade-in-up delay-500'}`}>
                     Dibuat dengan <span className="text-pink-400">🩷</span> oleh{' '}
-                    <a 
-                        href="https://instagram.com/nelson.oxm007" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="font-bold text-green-300 dark:text-green-400 hover:underline"
-                    >
-                        Noxm007
-                    </a>
+                    <a href="https://instagram.com/nelson.oxm007" target="_blank" rel="noopener noreferrer" className="font-bold text-green-300 dark:text-green-400 hover:underline">Noxm007</a>
                 </span>
             </div>
         </div>
     );
 
-    // -- RENDERER UNTUK HALAMAN PENGIRIMAN PESAN --
     const renderMessageForm = () => {
       const username = 'anonym'; 
       
@@ -335,36 +339,14 @@ const App = () => {
 
     return (
         <div className={`min-h-screen font-sans ${isDarkMode ? 'dark' : ''}`}>
-            {/* -- DIV KHUSUS UNTUK ANIMASI GRADASI BACKGROUND -- */}
             <div className={`fixed inset-0 -z-10 animate-background ${isDarkMode ? 'bg-gradient-to-br from-gray-800 via-gray-900 to-black' : 'bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400'}`} />
             
-            {showWelcomePopup && (
-                <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
-                    <div className="bg-white p-8 rounded-xl max-w-sm mx-auto text-center shadow-2xl transition-all duration-500 transform scale-100 opacity-100 animate-fade-in-up">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-4">Selamat Datang!</h2>
-                        <p className="text-gray-600 mb-6">
-                            Bersiaplah untuk pengalaman NGL.link tanpa spam! Kirim pesan anonim dengan tenang dan aman.
-                        </p>
-                        <button onClick={handleWelcomePopupClose} className="w-full py-3 px-4 rounded-xl font-bold text-white bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition-all duration-300">
-                            Oke
-                        </button>
-                    </div>
-                </div>
-            )}
-            <button onClick={toggleDarkMode} className="fixed top-4 right-4 z-50 p-2 rounded-full bg-white/20 text-white shadow-lg backdrop-blur-sm transition-transform hover:scale-110">
-                {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
-            </button>
+            {showWelcomePopup && ( <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in"><div className="bg-white p-8 rounded-xl max-w-sm mx-auto text-center shadow-2xl transition-all duration-500 transform scale-100 opacity-100 animate-fade-in-up"><h2 className="text-3xl font-bold text-gray-900 mb-4">Selamat Datang!</h2><p className="text-gray-600 mb-6">Bersiaplah untuk pengalaman NGL.link tanpa spam! Kirim pesan anonim dengan tenang dan aman.</p><button onClick={handleWelcomePopupClose} className="w-full py-3 px-4 rounded-xl font-bold text-white bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition-all duration-300">Oke</button></div></div> )}
+            <button onClick={toggleDarkMode} className="fixed top-4 right-4 z-50 p-2 rounded-full bg-white/20 text-white shadow-lg backdrop-blur-sm transition-transform hover:scale-100">{isDarkMode ? <Sun size={24} /> : <Moon size={24} />}</button>
             
             {userId ? renderMessageForm() : renderLinkGenerator()}
 
-            <div className="fixed bottom-4 right-4 flex flex-col space-y-4 z-50">
-                <a href="https://s.id/SwRch" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white shadow-lg transition-transform hover:scale-110">
-                    <Coffee size={24} />
-                </a>
-                <a href="https://wa.me/6287838901041?text=web+Ngl+Pro+nya+bermasalah+bang" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white shadow-lg transition-transform hover:scale-110">
-                    <Bug size={24} />
-                </a>
-            </div>
+            <div className="fixed bottom-4 right-4 flex flex-col space-y-4 z-50"><a href="https://s.id/SwRch" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white shadow-lg transition-transform hover:scale-110"><Coffee size={24} /></a><a href="https://wa.me/6287838901041?text=web+Ngl+Pro+nya+bermasalah+bang" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white shadow-lg transition-transform hover:scale-110"><Bug size={24} /></a></div>
             <audio ref={audioRef} src="https://files.catbox.moe/gj0me1.mp3" loop />
             <div id="tsparticles" className={`fixed inset-0 pointer-events-none z-0 ${showWelcomePopup ? 'hidden' : ''}`} />
         </div>
