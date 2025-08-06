@@ -6,9 +6,9 @@ import noteIconSvg from './assets/note-icon.svg?raw';
 
 // Impor komponen dan modul Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Autoplay } from 'swiper/modules';
+import { EffectCoverflow, Autoplay, Pagination } from 'swiper/modules'; // Tambahkan Pagination
 
-import './index.css'; // Pastikan index.css diimpor
+import './index.css';
 
 // ... (Konfigurasi Firebase tetap sama)
 const firebaseConfig = {
@@ -181,6 +181,7 @@ const App = () => {
         }
     };
     
+    // -- RENDERER UNTUK HALAMAN PEMBUAT TAUTAN --
     const renderLinkGenerator = () => (
         <div className={`relative min-h-screen p-4 flex flex-col items-center justify-center font-sans text-gray-800 dark:text-gray-200`}>
              <div className={`w-full max-w-md mx-auto transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}>
@@ -214,63 +215,61 @@ const App = () => {
             </div>
 
             <section className={`w-full max-w-4xl mx-auto mt-20 text-center transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}>
-                <div className={`${!isInitialLoad && 'animate-fade-in-up delay-200'}`}>
+                {/* --- KARTU PEMBUNGKUS BARU DENGAN SHADOW --- */}
+                <div className={`p-8 rounded-2xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700 shadow-lg ${!isInitialLoad && 'animate-fade-in-up delay-200'}`}>
                     <h2 className="text-4xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 text-transparent bg-clip-text mb-4">NGL Penuh Sampah? Waktunya Melawan Balik.</h2>
                     <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                         Bosan dengan pesan bot dan spam? Kami perkenalkan perisai utamamu. Bukan sekadar penyingkat link biasa, kami adalah bodyguard untuk NGL Anda.
                     </p>
-                </div>
 
-                {/* --- BAGIAN PROMOSI BARU DENGAN CAROUSEL --- */}
-                <Swiper
-                    effect={'coverflow'}
-                    grabCursor={true}
-                    centeredSlides={true}
-                    slidesPerView={'auto'}
-                    loop={true}
-                    autoplay={{
-                        delay: 3000,
-                        disableOnInteraction: false,
-                    }}
-                    coverflowEffect={{
-                        rotate: 50,
-                        stretch: 0,
-                        depth: 100,
-                        modifier: 1,
-                        slideShadows: false,
-                    }}
-                    modules={[EffectCoverflow, Autoplay]}
-                    className={`promo-carousel ${!isInitialLoad && 'animate-fade-in-up delay-300'}`}
-                >
-                    <SwiperSlide>
-                        <div className="p-6 h-full rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
-                            <ShieldCheck className="w-12 h-12 mx-auto text-purple-500" />
-                            <h3 className="text-xl font-bold mt-4">Anti-Bot & Spam</h3>
-                            <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Teknologi penyamaran link kami membuat bot spam kebingungan dan tidak bisa menargetkan NGL asli Anda.</p>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className="p-6 h-full rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
-                            <EyeOff className="w-12 h-12 mx-auto text-purple-500" />
-                            <h3 className="text-xl font-bold mt-4">IP Lebih Aman</h3>
-                            <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">NGL.link tidak akan melihat IP asli pengirim, melainkan IP server kami, menambah lapisan anonimitas ekstra.</p>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className="p-6 h-full rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
-                            <Clock className="w-12 h-12 mx-auto text-purple-500" />
-                            <h3 className="text-xl font-bold mt-4">Link Terbatas Waktu</h3>
-                            <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Setiap link akan hangus dalam 48 jam, mencegah link lama Anda disalahgunakan di kemudian hari.</p>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className="p-6 h-full rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-white/30 dark:border-gray-700">
-                            <Zap className="w-12 h-12 mx-auto text-purple-500" />
-                            <h3 className="text-xl font-bold mt-4">Cepat & Simpel</h3>
-                            <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Tanpa login, tanpa ribet. Cukup masukkan username Anda, buat link, dan bagikan dalam 5 detik.</p>
-                        </div>
-                    </SwiperSlide>
-                </Swiper>
+                    {/* --- RENDER KONDISIONAL UNTUK CAROUSEL --- */}
+                    {!isInitialLoad && (
+                        <Swiper
+                            effect={'coverflow'}
+                            grabCursor={true}
+                            centeredSlides={true}
+                            slidesPerView={'auto'}
+                            loop={true}
+                            autoplay={{
+                                delay: 3000,
+                                disableOnInteraction: false,
+                                waitForTransition: false,
+                            }}
+                            pagination={{ clickable: true }} // <-- Menambahkan opsi pagination
+                            modules={[EffectCoverflow, Autoplay, Pagination]} // <-- Menambahkan modul Pagination
+                            className="promo-carousel"
+                        >
+                            <SwiperSlide>
+                                <div className="p-6 h-full rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/30 dark:border-gray-700">
+                                    <ShieldCheck className="w-12 h-12 mx-auto text-purple-500" />
+                                    <h3 className="text-xl font-bold mt-4">Anti-Bot & Spam</h3>
+                                    <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Teknologi penyamaran link kami membuat bot spam kebingungan.</p>
+                                </div>
+                            </SwiperSlide>
+                             <SwiperSlide>
+                                <div className="p-6 h-full rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/30 dark:border-gray-700">
+                                    <EyeOff className="w-12 h-12 mx-auto text-purple-500" />
+                                    <h3 className="text-xl font-bold mt-4">IP Lebih Aman</h3>
+                                    <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">NGL.link tidak akan melihat IP asli pengirim, menambah lapisan anonimitas.</p>
+                                </div>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <div className="p-6 h-full rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/30 dark:border-gray-700">
+                                    <Clock className="w-12 h-12 mx-auto text-purple-500" />
+                                    <h3 className="text-xl font-bold mt-4">Link Terbatas Waktu</h3>
+                                    <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Setiap link akan hangus dalam 48 jam, mencegah link lama Anda disalahgunakan.</p>
+                                </div>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <div className="p-6 h-full rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/30 dark:border-gray-700">
+                                    <Zap className="w-12 h-12 mx-auto text-purple-500" />
+                                    <h3 className="text-xl font-bold mt-4">Cepat & Simpel</h3>
+                                    <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm">Tanpa login, tanpa ribet. Cukup masukkan username dan bagikan dalam 5 detik.</p>
+                                </div>
+                            </SwiperSlide>
+                        </Swiper>
+                    )}
+                </div>
             </section>
             
             <div className={`mt-20 text-sm whitespace-nowrap transition-opacity duration-500 ${isInitialLoad ? 'opacity-0' : 'opacity-100'}`}>
